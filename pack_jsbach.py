@@ -2,12 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 import sys
+import argparse
 
-jsbach_lsm_file="/work/ba0989/a270077/MPIESM/test_paul006/work/restart_test_paul006_jsbach.nc"
-jsbach_ini_file="/pool/data//JSBACH/input/r0009/T63/jsbach_T63GR15_11tiles_5layers_1850_dynveg.nc"
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='pack jsbach')
+    parser.add_argument("var_name")
+    parser.add_argument("var_file")
+    parser.add_argument("lsm_file")
+    return parser.parse_args()
 
-jsbach_lsm_DataArray=xr.open_dataset(jsbach_lsm_file)
-jsbach_ini_DataArray=xr.open_dataset(jsbach_ini_file)
 
 def pack_jsbach_var(var_name, var_file, lsm_name, lsm_file, out_name=None, out_file=None):
     # Assign the output variable name and file name to be the same as var_name
@@ -65,4 +68,8 @@ def pack_jsbach_var(var_name, var_file, lsm_name, lsm_file, out_name=None, out_f
     # Return the DataArray (for interactive use only...)
     return out_file
 
-pack_jsbach_var("soil_moisture", "/pf/a/a270077/soil_moisture_lonlat_grid.nc", "landseamask", jsbach_lsm_file)
+
+if __name__ == "__main__":
+    args = parse_arguments()
+
+    pack_jsbach_var(args.var_name, args.var_file, "landseamask", args.lsm_file)
