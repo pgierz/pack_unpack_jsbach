@@ -32,11 +32,12 @@ def pack_jsbach_var(var_name, var_file, lsm_name, lsm_file, out_name=None, out_f
         print("I cannot reduce a 1D array!")
         sys.exit()
     elif var.ndim == 2:
-        var_packed = np.empty(lsm.data.sum())
+        var_packed = np.empty(int(lsm.data.sum()))
     elif var.ndim == 3:
-        var_packed = np.empty((var.shape[0], lsm.data.sum()))
+        print(int(lsm.data.sum()))
+        var_packed = np.empty((var.shape[0], int(lsm.data.sum())))
     elif var.ndim == 4:
-        var_packed = np.empty((var.shape[0], var.shape[1], lsm.data.sum()))
+        var_packed = np.empty((var.shape[0], var.shape[1], int(lsm.data.sum())))
     else:
         # The rerun_jsbach.nc file appears to only have at most 3 dimensions,
         # so crash if somehow there are 4!
